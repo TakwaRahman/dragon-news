@@ -7,10 +7,10 @@ const Register = () => {
 
     const { createUser, setUser } = useContext(AuthContext)
 
-     const [nameError, setNameError] = useState("")
+    const [nameError, setNameError] = useState("")
 
     const handleRegister = (e) => {
-       
+
         e.preventDefault();
 
         const form = e.target;
@@ -18,7 +18,7 @@ const Register = () => {
         if (name.length < 5) {
             setNameError("Name Should be more than 5 character")
             return
-        }else{
+        } else {
             setNameError("")
         }
         const photo = form.photo.value;
@@ -31,6 +31,14 @@ const Register = () => {
                 // console.log(user)
                 setUser(user)
             })
+            .catch(error => {
+                if (error.code === "auth/email-already-in-use") {
+                    alert("এই Email দিয়ে আগে থেকেই Account খোলা আছে!");
+                }
+                else {
+                    alert(error.message);
+                }
+            });
     }
 
 
